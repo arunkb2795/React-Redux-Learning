@@ -1,19 +1,30 @@
-const second_initialState = {
-  name: "Arun",
-  age: 25,
+const initialState = {
+  loading: false,
+  users: [],
+  error: "",
 };
-const userReducer = (state = second_initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "NAME":
+    case "FETCH_USER_START":
       state = {
         ...state,
-        name: action.payload,
+        loading: true,
       };
       break;
-    case "AGE":
+    case "FETCH_USER_SUCCESS":
       state = {
         ...state,
-        age: action.payload,
+        loading: false,
+        users: action.payload,
+        error: "",
+      };
+      break;
+    case "FETCH_USER_FAILURE":
+      state = {
+        ...state,
+        loading: false,
+        users: [],
+        error: action.payload,
       };
       break;
     default:
