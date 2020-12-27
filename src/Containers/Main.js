@@ -1,31 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { setName } from "../Redux/Actions/userActions";
-class Main extends Component {
-  handleClick = () => {
-    this.props.setName("Luke");
-  };
-  render() {
-    return (
-      <div>
-        Hello Main : - {this.props.user.name}
-        <button onClick={this.handleClick}>ChangeName</button>
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.userReducer,
-  };
+const Main = () => {
+  const name = useSelector((state) => state.userReducer.name);
+  const dispatch = useDispatch();
+  return (
+    <div>
+      Hello Main : -{name}
+      <button onClick={() => dispatch(setName("Luke"))}>ChangeName</button>
+    </div>
+  );
 };
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setName: (name) => {
-      dispatch(setName(name));
-    },
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;
