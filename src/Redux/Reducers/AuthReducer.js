@@ -1,30 +1,36 @@
 const initialState = {
   loading: false,
-  users: [],
-  error: "",
+  authData: {},
+  error: null,
 };
-const userReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "FETCH_USER_START":
+    case "AUTH_START":
       state = {
         ...state,
         loading: true,
       };
       break;
-    case "FETCH_USER_SUCCESS":
+    case "AUTH_SUCCESS":
       state = {
         ...state,
         loading: false,
-        users: action.payload,
-        error: "",
+        authData: action.payload,
+        error: null,
       };
       break;
-    case "FETCH_USER_FAILURE":
+    case "AUTH_FAILURE":
       state = {
         ...state,
         loading: false,
-        users: [],
+        authData: {},
         error: action.payload,
+      };
+      break;
+    case "AUTH_LOGOUT":
+      state = {
+        ...state,
+        authData: {},
       };
       break;
     default:
@@ -33,4 +39,4 @@ const userReducer = (state = initialState, action) => {
   return state;
 };
 
-export default userReducer;
+export default authReducer;
