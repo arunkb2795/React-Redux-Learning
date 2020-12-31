@@ -71,3 +71,42 @@ export const postCreationReducer = (state = createPostInitialState, action) => {
   }
   return state;
 };
+
+const deletePostInitialState = {
+  loading: false,
+  postData: [],
+  error: null,
+};
+export const postDeletionReducer = (state = deletePostInitialState, action) => {
+  switch (action.type) {
+    case "POST_DELETE_START":
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case "POST_DELETE_SUCCESS":
+      const newPost = {
+        ...action.postData,
+        id: action.postId,
+      };
+      state = {
+        ...state,
+        loading: false,
+        postData: state.postData.concat(newPost),
+        error: null,
+      };
+      break;
+    case "POST_DELETE_FAILURE":
+      state = {
+        ...state,
+        loading: false,
+        postData: [],
+        error: action.payload,
+      };
+      break;
+    default:
+      return state;
+  }
+  return state;
+};

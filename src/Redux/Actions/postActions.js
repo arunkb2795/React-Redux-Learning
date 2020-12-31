@@ -37,6 +37,25 @@ export function postFetchFailure(error) {
   };
 }
 
+export function postDeleteStart() {
+  return {
+    type: "POST_DELETE_START",
+  };
+}
+export function postDeleteSuccess(id, postData) {
+  return {
+    type: "POST_DELETE_SUCCESS",
+    id: id,
+    postData: postData,
+  };
+}
+export function postDeleteFailure(error) {
+  return {
+    type: "POST_DELETE_FAILURE",
+    payload: error,
+  };
+}
+
 export const postCreation = (name, note) => {
   console.log(name, note);
   return (dispatch) => {
@@ -62,6 +81,28 @@ export const postCreation = (name, note) => {
 };
 
 export const getAllPosts = () => {
+  return (dispatch) => {
+    dispatch(postFetchStart());
+    axios
+      .get("/posts.json")
+      .then((response) => {
+        const fetchedPosts = [];
+        for (let key in response.data) {
+          fetchedPosts.push({
+            ...response.data[key],
+            id: key,
+          });
+        }
+        dispatch(postFetchSuccess(fetchedPosts));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(postFetchFailure(error));
+      });
+  };
+};
+
+export const postDelete = () => {
   return (dispatch) => {
     dispatch(postFetchStart());
     axios
