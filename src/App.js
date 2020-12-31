@@ -6,6 +6,7 @@ import Login from "./Containers/Login";
 import Dashboard from "./Containers/Dashboard";
 import Signup from "./Containers/Signup";
 import About from "./Containers/About";
+import Post from "./Containers/Post";
 import ForgotPassword from "./Containers/ForgotPassword";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./Route/PrivateRoute";
@@ -19,6 +20,7 @@ function App() {
       <Switch>
         <PrivateRoute exact path="/" component={Dashboard} />
         <PrivateRoute exact path="/about" component={About} />
+        <PrivateRoute exact path="/post" component={Post} />
         <Container
           className="d-flex align-items-center justify-content-center"
           style={{ minHeight: "100vh" }}

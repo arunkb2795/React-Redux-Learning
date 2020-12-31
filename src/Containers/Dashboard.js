@@ -1,126 +1,112 @@
-import React from "react";
-import { Button, Jumbotron, Nav, Card, CardColumns } from "react-bootstrap";
+import React, { useEffect } from "react";
+import {
+  Button,
+  Jumbotron,
+  Nav,
+  Navbar,
+  Card,
+  CardColumns,
+  Form,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 
-//import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../Redux/Actions/authActions";
-
+import { postCreation } from "../Redux/Actions/postActions";
+import { getAllPosts } from "../Redux/Actions/postActions";
 export default function Dashboard() {
-  //const authData = useSelector((state) => state.authReducer.authData);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
   };
+  const posts = useSelector((state) => state.postReducer.postData);
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let name = event.target.name.value;
+    let note = event.target.note.value;
+    dispatch(postCreation(name, note));
+  };
+  //console.log(posts);
   return (
     <div>
-      <Nav className="justify-content-end" activeKey="/home">
-        <Nav.Item>
-          <Nav.Link href="/">Home</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="link-2">
-            <Link to="/about">About</Link>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="disabled" onClick={handleLogout}>
-            <Link to="/login">Logout</Link>
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
-      <Jumbotron>
-        <h1>Hello, world!</h1>
-        <p>
-          This is a simple hero unit, a simple jumbotron-style component for
-          calling extra attention to featured content or information.
-        </p>
-        <p>
-          <Button variant="primary">Learn more</Button>
-        </p>
-      </Jumbotron>
-      <CardColumns>
-        <Card border="success" className="p-3">
-          <blockquote className="blockquote mb-0 card-body">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              posuere erat a ante.
-            </p>
-            <footer className="blockquote-footer">
-              <small className="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </Card>
+      <Navbar sticky="top" bg="primary" variant="dark">
+        <Navbar.Brand href="#home">KattaPost!</Navbar.Brand>
+        <Navbar.Toggle />
+        <Navbar.Collapse className="justify-content-end">
+          <Nav className="mr-auto"></Nav>
+          <Nav>
+            <Nav.Link onClick={handleLogout}>
+              <Link to="/login" style={{ color: "#fff" }}>
+                Logout
+              </Link>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
-        <Card bg="primary" text="white" className="text-center p-3">
-          <blockquote className="blockquote mb-0 card-body">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              posuere erat a ante.
-            </p>
-            <footer className="blockquote-footer">
-              <small className="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </Card>
+      <Container fluid>
+        <Row className="mt-3">
+          <Col sm={8}>
+            <Jumbotron>
+              <h1>Hello, world!</h1>
+              <p>
+                This is a simple hero unit, a simple jumbotron-style component
+                for calling extra attention to featured content or information.
+              </p>
+              <p>
+                <Button variant="primary">Learn more</Button>
+              </p>
+            </Jumbotron>
+          </Col>
+          <Col sm={4}>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                <Form.Label>Name</Form.Label>
+                <Form.Control name="name" type="text" placeholder="John Doe" />
+              </Form.Group>
 
-        <Card border="info" className="p-3">
-          <blockquote className="blockquote mb-0 card-body">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              posuere erat a ante.
-            </p>
-            <footer className="blockquote-footer">
-              <small className="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </Card>
-        <Card border="info" className="p-3">
-          <blockquote className="blockquote mb-0 card-body">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              posuere erat a ante.
-            </p>
-            <footer className="blockquote-footer">
-              <small className="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </Card>
-        <Card border="info" className="p-3">
-          <blockquote className="blockquote mb-0 card-body">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              posuere erat a ante.
-            </p>
-            <footer className="blockquote-footer">
-              <small className="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </Card>
-        <Card border="info" className="p-3">
-          <blockquote className="blockquote mb-0 card-body">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              posuere erat a ante.
-            </p>
-            <footer className="blockquote-footer">
-              <small className="text-muted">
-                Someone famous in <cite title="Source Title">Source Title</cite>
-              </small>
-            </footer>
-          </blockquote>
-        </Card>
-      </CardColumns>
+              <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Your Post</Form.Label>
+                <Form.Control
+                  name="note"
+                  as="textarea"
+                  rows={3}
+                  placeholder="Type something..."
+                />
+              </Form.Group>
+              <Button className="w-100 mt-3 mb-5" type="submit">
+                Create Post
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+      <Container fluid>
+        <CardColumns>
+          {posts.map((item) => {
+            return (
+              <Card key={item.id} border="success" className="p-3">
+                <blockquote className="blockquote mb-0 card-body">
+                  <p>{item.note}</p>
+                  <footer className="blockquote-footer">
+                    <small className="text-muted">
+                      Someone famous in{" "}
+                      <cite title="Source Title">{item.name}</cite>
+                    </small>
+                  </footer>
+                </blockquote>
+              </Card>
+            );
+          })}
+        </CardColumns>
+      </Container>
     </div>
   );
 }
