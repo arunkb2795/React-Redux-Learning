@@ -16,7 +16,7 @@ function App() {
     dispatch(autoLogin());
   }, [dispatch]);
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <PrivateRoute exact path="/" component={Dashboard} />
         <PrivateRoute exact path="/about" component={About} />
