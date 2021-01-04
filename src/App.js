@@ -26,9 +26,12 @@ function App() {
           style={{ minHeight: "100vh" }}
         >
           <div className="w-100" style={{ maxWidth: "400px" }}>
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/forgot-password" component={ForgotPassword} />
+            <Route path="/React-Redux-Learning/login" component={Login} />
+            <Route path="/React-Redux-Learning/signup" component={Signup} />
+            <Route
+              path="/React-Redux-Learning/forgot-password"
+              component={ForgotPassword}
+            />
           </div>
         </Container>
       </Switch>
