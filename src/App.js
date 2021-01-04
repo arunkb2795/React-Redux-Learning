@@ -16,7 +16,7 @@ function App() {
     dispatch(autoLogin());
   }, [dispatch]);
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router basename="/React-Redux-Learning">
       <Switch>
         <PrivateRoute exact path="/" component={Dashboard} />
         <PrivateRoute exact path="/about" component={About} />
