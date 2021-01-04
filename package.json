@@ -1,7 +1,6 @@
 {
   "name": "redux-learning",
   "version": "0.1.0",
-  "homepage": "https://arunkb2795.github.io/React-Redux-Learning",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
