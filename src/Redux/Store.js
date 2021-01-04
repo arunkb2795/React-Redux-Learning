@@ -1,9 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import logger from "redux-logger";
-import userReducer from "./Reducers/userReducer";
+import authReducer from "./Reducers/AuthReducer";
+import { postReducer } from "./Reducers/postReducer";
+import { postCreationReducer } from "./Reducers/postReducer";
+import thunk from "redux-thunk";
 const store = createStore(
-  combineReducers({ userReducer }),
+  combineReducers({ authReducer, postCreationReducer, postReducer }),
   {},
-  applyMiddleware(logger)
+  applyMiddleware(thunk, logger)
 );
 export default store;
